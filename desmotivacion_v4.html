@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notificación: 1% de motivación restante</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,500;1,300&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#22262c;--surf:#2b3037;--line:#3a404a;--tx:#b4b8bf;--hi:#d3d5d9;--mut:#7c828c;--amb:#a98a58;--red:#94595a;--bar:#5d6673;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#d9dbdd;--surf:#cdd0d3;--line:#b4b8bd;--tx:#4a4f57;--hi:#2b2f35;--mut:#757b84;--amb:#8a6b3a;--red:#8a4849;--bar:#8d95a1;color-scheme:light}}
+:root[data-theme="dark"]{color-scheme:dark}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 1.02rem/1.7 "Instrument Sans",system-ui,sans-serif;min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:20}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:1rem;padding:.6rem 1rem}
+nav{display:flex;gap:.25rem;overflow-x:auto;flex:1;scrollbar-width:none}
+nav button{background:none;border:0;color:var(--mut);font:inherit;font-size:.92rem;padding:.4rem .75rem;border-radius:6px;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--hi)}
+nav button[aria-current="true"]{color:var(--hi);background:var(--surf)}
+button:focus-visible{outline:2px solid var(--amb);outline-offset:2px}
+.batt{display:flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--mut);flex:none}
+.batt svg{width:34px;height:16px}
+main{max-width:760px;margin:0 auto;padding:3rem 1.25rem 4rem}
+section{display:none}section.on{display:block}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:300;color:var(--hi);line-height:1.15;margin:0}
+h1{font-size:clamp(2.6rem,8vw,4.8rem);letter-spacing:-.025em}
+h2{font-size:clamp(2.3rem,6.5vw,3.3rem);font-weight:500;margin-bottom:1.4rem}
+h3{font-weight:500;font-size:1.2rem;margin:1.6rem 0 .4rem}
+p{max-width:62ch;margin:0 0 1.1rem}
+.sub{font-family:Newsreader,serif;font-style:italic;font-size:clamp(1.3rem,4vw,1.8rem);color:var(--hi);opacity:.8;margin:.3rem 0 1.5rem}
+.lead{font-size:1.2rem;color:var(--hi);opacity:.85}
+.ill{display:block;width:100%;max-width:420px;height:auto;margin:1.6rem 0}
+.ill.w{max-width:560px}
+.ill.b{max-width:none;border-radius:8px}
+.go{margin-top:1rem;background:var(--surf);color:var(--hi);border:1px solid var(--line);padding:.7rem 1.3rem;border-radius:8px;font:inherit;cursor:pointer}
+.go:hover{border-color:var(--amb)}
+.pager{display:flex;justify-content:space-between;margin-top:3rem;border-top:1px solid var(--line);padding-top:1rem}
+.pager button{background:none;border:0;color:var(--mut);font:inherit;cursor:pointer;padding:.4rem 0}
+.pager button:hover{color:var(--hi)}
+.tag{font-size:.7rem;color:var(--mut);letter-spacing:.08em;flex:none}
+.foot{margin:2.5rem 0 0;font-size:.8rem;color:var(--mut);text-align:center}
+.vb{background:none;border:1px solid var(--line);color:var(--mut);font:inherit;font-size:.8rem;padding:.3rem .8rem;border-radius:6px;cursor:pointer;margin-left:.4rem}
+.vb:hover{color:var(--hi)}
+.vb[aria-pressed="true"]{color:var(--hi);background:var(--surf);border-color:var(--amb)}
+body.mv{background:var(--surf);font-size:1.02rem}
+body.mv header,body.mv main{max-width:390px;margin-left:auto;margin-right:auto;background:var(--bg)}
+body.mv header{padding:.6rem 1rem}
+body.mv main{padding:3rem 1.25rem 4rem;min-height:100vh;box-shadow:0 0 0 1px var(--line)}
+body.mv nav button{font-size:.92rem;padding:.4rem .75rem}
+body.mv .batt{font-size:.85rem}body.mv .batt svg{width:34px;height:16px}
+body.mv h1{font-size:2.6rem}body.mv h2{font-size:2.3rem;margin-bottom:1.4rem}
+body.mv p{max-width:62ch}body.mv .lead{font-size:1.2rem}
+body.mv .row{grid-template-columns:minmax(90px,150px) 1fr 4.4rem;font-size:.9rem}
+body.mv .chart{padding:1.2rem 1.3rem}
+body.mv .cols{gap:0 2rem}body.mv .big{font-size:3rem}body.mv .facts{gap:1rem}
+body.mv .mapwrap{grid-template-columns:1fr}body.mv .map{margin:0 auto}
+.chart{background:var(--surf);border-radius:10px;padding:1.2rem 1.3rem;margin:1.6rem 0}
+.chart h4{margin:0 0 1rem;font-weight:500;color:var(--hi);font-size:.98rem}
+.row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 4.4rem;gap:.7rem;align-items:center;margin:.55rem 0;font-size:.9rem}
+.track{height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bar);border-radius:6px;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.fill.a{background:var(--amb)}.fill.r{background:var(--red)}
+.row b{font-weight:500;color:var(--hi);text-align:right}
+.note{font-size:.8rem;color:var(--mut);margin:.9rem 0 0}
+.desks{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:.4rem 0}
+.desks svg{width:100%}
+.big{font-family:Newsreader,serif;font-size:3rem;font-weight:300;color:var(--hi);line-height:1;display:block}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.facts div{border-left:2px solid var(--line);padding-left:1rem;font-size:.92rem}
+.steps{margin:1.6rem 0;border-left:2px solid var(--line);margin-left:.5rem}
+.steps div{padding:0 0 1.2rem 1.2rem;position:relative}
+.steps div::before{content:"";position:absolute;left:-7px;top:.55rem;width:12px;height:12px;border-radius:50%;background:var(--c)}
+.steps b{color:var(--hi);font-weight:500}
+.bs{display:flex;gap:1rem;margin:1.4rem 0;flex-wrap:wrap}
+.bs svg{width:46px;height:22px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 2rem}
+.quote{border-left:2px solid var(--amb);padding-left:1rem;color:var(--hi);font-family:Newsreader,serif;font-style:italic;font-size:1.25rem;max-width:50ch;margin:1.6rem 0}
+.mapwrap{display:grid;grid-template-columns:minmax(0,270px) 1fr;gap:1.5rem 2.5rem;align-items:center}
+.map{width:100%;max-width:270px;height:auto;display:block}
+.pv{fill:var(--line);stroke:var(--surf);stroke-width:1}
+.pv:not([data-i=""]){cursor:pointer}
+.pv:not([data-i=""]):hover,.pv.on{stroke:var(--hi);stroke-width:1.6}
+.v80{fill:#8c98a8;background:#8c98a8}.v59{fill:#6b7686;background:#6b7686}.v52{fill:var(--amb);background:var(--amb)}.v48{fill:var(--red);background:var(--red)}.qh{fill:#505b69;background:#505b69}.ql{fill:#7a5a5b;background:#7a5a5b}.nd{background:var(--line)}
+.ml{font:500 10px "Instrument Sans",system-ui,sans-serif;fill:#eceef1;pointer-events:none;paint-order:stroke;stroke:rgba(20,22,26,.6);stroke-width:2.5px}
+.lg{list-style:none;margin:0 0 1.2rem;padding:0;font-size:.9rem}.lg li{display:flex;gap:.6rem;align-items:flex-start;margin:.5rem 0}
+.lg i{width:14px;height:14px;border-radius:3px;flex:none;margin-top:.35em}.lg b{margin-left:auto;color:var(--hi);font-weight:500;padding-left:1rem;text-align:right}
+.mi{min-height:3.6em;border-left:2px solid var(--amb);padding-left:.9rem;margin:0;font-size:.92rem}
+@media (max-width:640px){.mapwrap{grid-template-columns:1fr}.map{margin:0 auto}}
+@media (min-width:960px){
+body{font-size:1.1rem}
+header{padding:.9rem 3rem}
+nav button{font-size:1rem;padding:.5rem 1rem}
+.batt{font-size:.95rem}.batt svg{width:42px;height:20px}
+main{max-width:1080px;padding:5rem 3rem 6rem}
+p{max-width:68ch}
+.lead{font-size:1.3rem}
+h2{font-size:3.9rem;margin-bottom:1.8rem}
+.ill{max-width:520px}
+.row{grid-template-columns:minmax(200px,280px) 1fr 5.2rem;font-size:1rem}
+.chart{padding:1.6rem 2rem}
+.cols{gap:0 4rem}
+.big{font-size:3.6rem}
+.facts{gap:2.5rem}
+}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<header>
+<span class="tag">ECEA</span><nav id="nav" aria-label="Secciones"></nav>
+<div class="batt" aria-hidden="true"><svg viewBox="0 0 34 16"><rect x="1" y="1" width="28" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="30" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect id="bf" x="3" y="3" width="24" height="10" rx="1.5" fill="var(--amb)"/></svg><span id="bp">100%</span></div>
+</header>
+<main>
+
+<section class="hero" data-t="Inicio">
+<h1>Notificación: 1% de motivación restante</h1>
+<p class="sub">La desmotivación académica en adolescentes argentinos</p>
+<svg class="ill b" width="100%" viewBox="0 0 680 240" role="img"><title>Estudiante dormido sobre el escritorio</title><desc>Ilustración plana de un estudiante con la cabeza apoyada sobre un escritorio en una biblioteca de noche, con una batería casi vacía flotando sobre él.</desc>
+<rect width="680" height="240" rx="8" fill="#2b3037"/>
+<path d="M0 196H680V232Q680 240 672 240H8Q0 240 0 232Z" fill="#252a30"/>
+<rect x="200" y="30" width="92" height="96" fill="#22262c" stroke="#3a404a" stroke-width="4"/><path d="M246 30V126M200 78H292" stroke="#3a404a" stroke-width="3"/><circle cx="224" cy="54" r="12" fill="#d3d5d9" opacity=".35"/>
+<polygon points="200,126 292,126 340,196 150,196" fill="#a98a58" opacity=".07"/>
+<rect x="24" y="44" width="116" height="150" rx="4" fill="#3a404a"/><rect x="30" y="50" width="104" height="66" fill="#2b3037"/><rect x="30" y="122" width="104" height="66" fill="#2b3037"/>
+<g><rect x="36" y="74" width="12" height="42" fill="#5d6673"/><rect x="50" y="82" width="10" height="34" fill="#a98a58"/><rect x="62" y="70" width="12" height="46" fill="#7c828c"/><rect x="76" y="80" width="10" height="36" fill="#94595a"/><rect x="88" y="76" width="14" height="40" fill="#5d6673"/><rect x="104" y="84" width="10" height="32" fill="#7c828c"/><rect x="116" y="72" width="12" height="44" fill="#a98a58"/>
+<rect x="36" y="146" width="10" height="42" fill="#7c828c"/><rect x="48" y="138" width="14" height="50" fill="#5d6673"/><rect x="64" y="150" width="10" height="38" fill="#94595a"/><rect x="76" y="142" width="12" height="46" fill="#a98a58"/><rect x="92" y="170" width="38" height="18" fill="#3f4650"/><rect x="96" y="158" width="30" height="12" fill="#5d6673"/></g>
+<rect x="540" y="44" width="116" height="150" rx="4" fill="#3a404a"/><rect x="546" y="50" width="104" height="66" fill="#2b3037"/><rect x="546" y="122" width="104" height="66" fill="#2b3037"/>
+<g><rect x="552" y="84" width="14" height="32" fill="#a98a58"/><rect x="568" y="76" width="10" height="40" fill="#5d6673"/><rect x="580" y="88" width="12" height="28" fill="#7c828c"/><rect x="594" y="80" width="14" height="36" fill="#94595a"/><rect x="610" y="86" width="10" height="30" fill="#5d6673"/><rect x="622" y="74" width="12" height="42" fill="#7c828c"/>
+<rect x="552" y="144" width="12" height="44" fill="#5d6673"/><rect x="566" y="152" width="14" height="36" fill="#7c828c"/><rect x="582" y="142" width="10" height="46" fill="#a98a58"/><rect x="594" y="150" width="12" height="38" fill="#94595a"/></g>
+<rect x="136" y="166" width="38" height="30" rx="10" fill="#94595a"/><rect x="145" y="178" width="20" height="10" rx="3" fill="#7a4748"/>
+<rect x="170" y="140" width="330" height="10" rx="3" fill="#7c828c"/><rect x="188" y="150" width="6" height="46" fill="#5d6673"/><rect x="476" y="150" width="6" height="46" fill="#5d6673"/>
+<rect x="196" y="136" width="28" height="4" fill="#5d6673"/><path d="M210 136L218 100L240 88" stroke="#7c828c" stroke-width="4" fill="none" stroke-linecap="round"/><polygon points="232,82 254,92 246,103 226,92" fill="#7c828c"/>
+<rect x="262" y="133" width="62" height="7" fill="#d3d5d9" opacity=".7"/><rect x="272" y="129" width="30" height="4" rx="1" fill="#a98a58"/>
+<rect x="512" y="108" width="10" height="80" rx="4" fill="#5d6673"/><rect x="460" y="178" width="66" height="9" rx="4" fill="#5d6673"/><rect x="490" y="187" width="5" height="9" fill="#5d6673"/>
+<rect x="392" y="172" width="100" height="16" rx="7" fill="#3d444d"/><rect x="392" y="180" width="14" height="16" fill="#3d444d"/><rect x="386" y="192" width="26" height="8" rx="4" fill="#22262c"/>
+<rect x="326" y="131" width="100" height="10" rx="5" fill="#5f7487"/><circle cx="322" cy="136" r="6" fill="#c4a48c"/>
+<path d="M404 112Q452 96 486 128L502 178L452 178L430 148Q418 142 404 142Z" fill="#5f7487"/><path d="M440 124L454 176" stroke="#4d6070" stroke-width="2" fill="none"/>
+<ellipse cx="414" cy="116" rx="14" ry="10" fill="#4d6070"/><ellipse cx="408" cy="112" rx="9" ry="7" fill="#c4a48c"/>
+<circle cx="390" cy="119" r="21" fill="#5b4638"/><path d="M376 108Q390 96 405 106" stroke="#6b5444" stroke-width="4" fill="none" stroke-linecap="round"/>
+<rect x="436" y="26" width="84" height="38" rx="8" fill="none" stroke="#7c828c" stroke-width="4"/><rect x="522" y="37" width="6" height="16" rx="2" fill="#7c828c"/><rect x="442" y="32" width="9" height="26" rx="3" fill="#94595a"/>
+<text x="364" y="92" style="fill:#7c828c;font-family:Georgia,serif;font-style:italic;font-size:20px">z</text><text x="380" y="72" style="fill:#7c828c;font-family:Georgia,serif;font-style:italic;font-size:26px">z</text><text x="402" y="48" style="fill:#7c828c;font-family:Georgia,serif;font-style:italic;font-size:32px">z</text>
+</svg>
+<p class="lead">Todos conocemos a alguien que “no da más” con el colegio. Sin embargo, la falta de motivación hacia el estudio rara vez se reduce a la pereza: tiene causas sociales, económicas y escolares que se superponen.</p>
+<p>Este sitio explica qué es la desmotivación académica en adolescentes argentinos, cuáles son sus orígenes y causas, qué consecuencias genera y qué muestran las estadísticas.</p>
+<button class="go" data-go="1">Comenzar</button>
+</section>
+
+<section data-t="¿Qué es?">
+<h2>¿Cómo se va la motivación?</h2>
+<p class="lead">La desmotivación académica ocurre cuando el estudiante deja de encontrar utilidad o sentido en lo que aprende. No surge de un día para otro: es un proceso gradual.</p>
+<div class="bs" id="bs" aria-hidden="true"></div>
+<div class="steps">
+<div style="--c:var(--bar)"><b>Primeras inasistencias.</b> Faltar una vez facilita faltar la siguiente.</div>
+<div style="--c:var(--bar)"><b>Descenso del rendimiento.</b> Quien no estudia para una evaluación comienza a no hacerlo para ninguna.</div>
+<div style="--c:var(--amb)"><b>Desaprobación.</b> Aparecen la repitencia y la sobreedad.</div>
+<div style="--c:var(--red)"><b>Abandono.</b> El alumno deja los estudios por completo.</div>
+</div>
+<p>Desmotivación y abandono no son sinónimos, pero la primera suele ser el paso previo al segundo. Por eso, buena parte de la información disponible se refiere al abandono escolar.</p>
+<p class="quote">Lo que está en crisis es el sentido de la escuela.</p>
+<p class="note">Elena Duro, especialista de UNICEF, 2002. Casi dos décadas después, la afirmación conserva vigencia.</p>
+</section>
+
+<section data-t="Origen">
+<h2>Un problema con historia</h2>
+<svg class="ill b" width="100%" viewBox="0 0 680 240" role="img"><title>Escuela con la puerta cerrada</title><desc>Ilustración plana de un edificio escolar de noche con la puerta cerrada con candado, un árbol, una reja y una mochila olvidada en los escalones.</desc>
+<rect width="680" height="240" rx="8" fill="#2b3037"/>
+<circle cx="600" cy="52" r="20" fill="#d3d5d9" opacity=".3"/><ellipse cx="130" cy="46" rx="44" ry="10" fill="#343a43"/><ellipse cx="160" cy="38" rx="30" ry="9" fill="#343a43"/><ellipse cx="520" cy="80" rx="40" ry="9" fill="#343a43"/>
+<path d="M0 192H680V232Q680 240 672 240H8Q0 240 0 232Z" fill="#252a30"/>
+<rect x="62" y="132" width="9" height="60" fill="#3a404a"/><circle cx="66" cy="112" r="34" fill="#3b4550"/><circle cx="44" cy="128" r="22" fill="#3b4550"/><circle cx="88" cy="128" r="22" fill="#3b4550"/>
+<rect x="130" y="122" width="62" height="70" fill="#2f353d" stroke="#3a404a" stroke-width="2"/><rect x="488" y="122" width="62" height="70" fill="#2f353d" stroke="#3a404a" stroke-width="2"/>
+<rect x="190" y="86" width="300" height="106" fill="#2f353d" stroke="#3a404a" stroke-width="2"/>
+<polygon points="180,88 340,38 500,88" fill="#3a404a"/><circle cx="340" cy="72" r="13" fill="#22262c" stroke="#7c828c" stroke-width="2"/><path d="M340 72V64M340 72l5 3" stroke="#d3d5d9" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path d="M340 40V12" stroke="#7c828c" stroke-width="2"/><rect x="340" y="12" width="24" height="13" fill="#94595a" opacity=".75"/>
+<g fill="#22262c" stroke="#3a404a" stroke-width="2"><rect x="212" y="106" width="36" height="36"/><rect x="260" y="106" width="36" height="36"/><rect x="384" y="106" width="36" height="36"/><rect x="432" y="106" width="36" height="36"/><rect x="146" y="140" width="30" height="28"/><rect x="504" y="140" width="30" height="28"/></g>
+<g stroke="#3a404a" stroke-width="2"><path d="M230 106V142M212 124H248M278 106V142M260 124H296M402 106V142M384 124H420M450 106V142M432 124H468"/></g>
+<g fill="#a98a58" opacity=".12"><rect x="214" y="108" width="14" height="32"/><rect x="386" y="108" width="14" height="32"/></g>
+<rect x="316" y="132" width="48" height="60" rx="3" fill="#22262c" stroke="#7c828c" stroke-width="3"/><path d="M340 132V192" stroke="#7c828c" stroke-width="2"/>
+<rect x="331" y="160" width="18" height="14" rx="3" fill="#a98a58"/><path d="M335 160V155a5 5 0 0 1 10 0V160" stroke="#a98a58" stroke-width="3" fill="none"/>
+<rect x="296" y="184" width="88" height="8" fill="#5d6673"/><rect x="286" y="190" width="108" height="6" fill="#4a525d"/>
+<rect x="398" y="170" width="22" height="20" rx="7" fill="#94595a"/><rect x="403" y="178" width="12" height="7" rx="2" fill="#7a4748"/>
+<g fill="#3a404a"><rect x="580" y="150" width="6" height="42"/><rect x="604" y="150" width="6" height="42"/><rect x="628" y="150" width="6" height="42"/><rect x="652" y="150" width="6" height="42"/><rect x="574" y="160" width="90" height="4"/><rect x="574" y="176" width="90" height="4"/></g>
+</svg>
+<h3>Un formato que cambió poco</h3>
+<p>Desde que la Ley de Educación Nacional de 2006 estableció la obligatoriedad del secundario, ingresó a las aulas una cantidad mucho mayor de jóvenes. El formato, en cambio, se mantuvo casi intacto: numerosas materias, muchos docentes distintos y evaluaciones tradicionales. Argentinos por la Educación describe el abandono como el resultado “silencioso” de factores sociales, económicos y culturales, agravado por modelos escolares que no favorecen la permanencia.</p>
+<h3>El impacto de la pandemia</h3>
+<p>Una encuesta de <a href="https://chequeado.com/hilando-fino/encuesta-de-unicef-en-357-mil-hogares-al-menos-un-chico-abandono-la-escuela-en-2020/" target="_blank" rel="noopener">UNICEF</a> estimó que, en 2020, al menos 357 mil niños y adolescentes habrían abandonado la escuela en el país, con un máximo posible de 694 mil. Entre los motivos mencionados figuran la pérdida del deseo de seguir estudiando y la desconexión producida durante el aislamiento.</p>
+<div class="chart"><h4>Estudiantes que habrían abandonado la escuela en 2020</h4>
+<div class="row"><span>Estimación mínima</span><div class="track"><div class="fill a" data-w="51.4"></div></div><b>357.000</b></div>
+<div class="row"><span>Estimación máxima</span><div class="track"><div class="fill r" data-w="100"></div></div><b>694.000</b></div></div>
+</section>
+
+<section data-t="Causas">
+<h2>Aplicaciones en segundo plano</h2>
+<p>Los factores pueden agruparse según se originen fuera o dentro de la institución escolar.</p>
+<svg class="ill b" width="100%" viewBox="0 0 680 240" role="img"><title>Mochila, caja de trabajo, monedas y despertador</title><desc>Ilustración plana de cuatro objetos sobre una mesa: una mochila escolar con un cuaderno, una caja de reparto, una pila de monedas y un reloj despertador.</desc>
+<rect width="680" height="240" rx="8" fill="#2b3037"/>
+<ellipse cx="340" cy="120" rx="305" ry="100" fill="#343a43"/>
+<path d="M0 192H680V232Q680 240 672 240H8Q0 240 0 232Z" fill="#252a30"/>
+<rect x="30" y="188" width="620" height="10" rx="3" fill="#5d6673"/>
+<ellipse cx="150" cy="196" rx="62" ry="6" fill="#22262c" opacity=".6"/><ellipse cx="282" cy="196" rx="56" ry="6" fill="#22262c" opacity=".6"/><ellipse cx="396" cy="196" rx="40" ry="6" fill="#22262c" opacity=".6"/><ellipse cx="526" cy="196" rx="62" ry="6" fill="#22262c" opacity=".6"/>
+<rect x="116" y="60" width="52" height="30" rx="3" fill="#d3d5d9" opacity=".65" transform="rotate(-6 142 75)"/><rect x="124" y="64" width="34" height="3" fill="#7c828c" transform="rotate(-6 142 75)"/>
+<path d="M124 78a28 24 0 0 1 56 0" stroke="#4a525d" stroke-width="6" fill="none"/>
+<rect x="96" y="76" width="108" height="112" rx="30" fill="#5d6673"/>
+<rect x="116" y="124" width="68" height="46" rx="12" fill="#3a404a"/><path d="M122 138H178" stroke="#7c828c" stroke-width="2"/><rect x="142" y="130" width="16" height="6" rx="3" fill="#a98a58"/>
+<path d="M118 84V120M182 84V120" stroke="#4a525d" stroke-width="5" stroke-linecap="round"/><circle cx="196" cy="130" r="5" fill="#94595a"/>
+<rect x="244" y="92" width="76" height="36" rx="3" fill="#8f7447"/><rect x="274" y="92" width="16" height="36" fill="#7a613a"/>
+<rect x="230" y="128" width="104" height="60" rx="3" fill="#a98a58"/><rect x="274" y="128" width="16" height="60" fill="#8f7447"/><rect x="242" y="146" width="26" height="16" rx="2" fill="#d3d5d9" opacity=".55"/><rect x="246" y="151" width="18" height="2" fill="#7c828c"/><rect x="246" y="156" width="12" height="2" fill="#7c828c"/>
+<g fill="#a98a58"><rect x="370" y="176" width="52" height="12" rx="5"/><rect x="370" y="164" width="52" height="12" rx="5"/><rect x="370" y="152" width="52" height="12" rx="5"/><rect x="370" y="140" width="52" height="12" rx="5"/><rect x="370" y="128" width="52" height="12" rx="5"/></g>
+<g stroke="#8f7447" stroke-width="2"><path d="M374 170H418M374 158H418M374 146H418M374 134H418"/></g>
+<circle cx="454" cy="174" r="16" fill="#a98a58" stroke="#8f7447" stroke-width="2"/><circle cx="454" cy="174" r="9" fill="none" stroke="#8f7447" stroke-width="2"/>
+<circle cx="526" cy="118" r="60" fill="#2f353d" stroke="#7c828c" stroke-width="6"/><circle cx="526" cy="118" r="50" fill="#22262c"/>
+<g stroke="#7c828c" stroke-width="3" stroke-linecap="round"><path d="M526 74V82M526 154V162M482 118H490M562 118H570"/></g>
+<path d="M526 118V90M526 118L546 130" stroke="#d3d5d9" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M526 118L508 138" stroke="#94595a" stroke-width="2" stroke-linecap="round"/><circle cx="526" cy="118" r="5" fill="#a98a58"/>
+<circle cx="486" cy="68" r="14" fill="#5d6673"/><circle cx="566" cy="68" r="14" fill="#5d6673"/><path d="M526 58V48" stroke="#7c828c" stroke-width="5" stroke-linecap="round"/>
+<path d="M496 172L486 190M556 172L566 190" stroke="#7c828c" stroke-width="5" stroke-linecap="round"/>
+</svg>
+<div class="cols">
+<div><h3>Fuera de la escuela</h3>
+<p><b>Trabajo adolescente.</b> Según UNICEF, una de cada seis adolescentes de 14 y 15 años trabaja, proporción que sube a uno de cada tres entre los de 16 y 17. Combinar empleo y estudio resulta muy difícil.</p>
+<p><b>Embarazo y tareas de cuidado.</b> Uno de cada diez estudiantes que abandonó lo hizo por un embarazo o por el cuidado de un hermano o un hijo pequeño.</p>
+<p><b>Situación económica.</b> El abandono golpea con mayor fuerza a los sectores más pobres y a las provincias del norte del país.</p></div>
+<div><h3>Dentro de la escuela</h3>
+<p><b>Falta de sentido.</b> Cerca de tres de cada diez estudiantes que abandonan lo hacen porque la escuela no les agrada o no la consideran necesaria.</p>
+<p><b>Inasistencias y repitencia.</b> El 9% quedó libre por faltas. Además, el fracaso escolar, la sobreedad y la repetición figuran entre las principales causas de abandono.</p>
+<p><b>Formato del secundario.</b> Contenidos percibidos como poco útiles, clases poco atractivas y escasa conexión con la realidad cotidiana.</p></div>
+</div>
+<div class="chart"><h4>Motivos de abandono (% de quienes dejaron la escuela)</h4>
+<div class="row"><span>No le agrada o no la considera necesaria</span><div class="track"><div class="fill r" data-w="93"></div></div><b>28%</b></div>
+<div class="row"><span>Embarazo o cuidado de otros</span><div class="track"><div class="fill a" data-w="33"></div></div><b>10%</b></div>
+<div class="row"><span>Libre por inasistencias</span><div class="track"><div class="fill" data-w="30"></div></div><b>9%</b></div></div>
+<div class="chart"><h4>Adolescentes que trabajan</h4>
+<div class="row"><span>14 y 15 años</span><div class="track"><div class="fill a" data-w="16.7"></div></div><b>1 de 6</b></div>
+<div class="row"><span>16 y 17 años</span><div class="track"><div class="fill r" data-w="33.3"></div></div><b>1 de 3</b></div></div>
+</section>
+
+<section data-t="Cifras">
+<h2>Diagnóstico de batería</h2>
+<div class="facts">
+<div><span class="big">300 mil</span>adolescentes de 12 a 17 años no asisten a la escuela, según UNICEF.</div>
+<div><span class="big">8 min</span>es el intervalo en que un estudiante abandona el secundario: 156 por día y unos 57 mil por año.</div>
+<div><span class="big">70%</span>de quienes ingresan no finaliza en el tiempo previsto, ya sea por repitencia o por abandono.</div>
+</div>
+<div class="chart"><h4>Solo 1 de cada 10 completó el secundario en tiempo y forma</h4>
+<div class="desks" id="desks"></div>
+<p class="note">Estudiantes que iniciaron primer grado en 2013 y finalizaron en 2024 sin repetir ni abandonar, con nivel adecuado en matemática y lengua.</p></div>
+<div class="chart"><h4>Egreso en tiempo y forma por provincia (%)</h4>
+<div class="mapwrap"><svg class="map" viewBox="0 0 270 530" role="img" aria-label="Mapa de Argentina por provincias según el egreso en tiempo y forma"><title>Egreso en tiempo y forma por provincia</title><path class="pv " d="M104 93L103 93L102 92L100 94L99 95L98 94L98 91L96 91L95 89L94 85L93 84L92 84L92 82L96 77L96 74L94 72L91 71L91 69L92 66L97 68L98 64L101 65L103 64L103 65L107 67L109 66L113 66L112 70L113 73L112 73L111 75L109 81L108 84L107 84L106 86L106 89L106 91L106 92L104 93Z" data-n="Tucumán" data-i=""/><path class="pv qh" d="M68 516L66 515L63 516L61 515L61 502L62 491L62 481L65 485L66 487L64 487L63 489L63 490L64 491L67 491L68 493L70 496L74 500L75 501L77 503L86 507L87 509L91 511L96 513L98 513L102 512L105 513L102 517L99 517L95 517L94 517L90 518L89 519L86 518L84 517L82 517L76 516L73 516L68 516ZM110 517L109 516L115 514L119 515L116 516L114 516L110 517Z" data-n="Tierra del Fuego" data-i="qh"/><path class="pv " d="M77 163L77 162L77 155L77 155L82 155L85 155L87 156L90 156L92 156L93 155L96 156L97 155L99 155L103 158L103 159L104 162L107 162L108 166L106 173L105 176L105 190L105 204L105 220L86 220L86 219L88 212L88 206L87 203L87 201L85 198L84 195L84 192L85 191L85 189L82 186L82 184L80 179L79 176L79 172L79 172L79 169L79 168L78 164L77 163Z" data-n="San Luis" data-i=""/><path class="pv " d="M42 162L41 161L40 158L41 158L42 156L41 155L39 155L37 150L38 146L38 144L39 143L40 143L41 142L40 140L41 136L43 133L45 131L47 128L45 126L46 121L45 120L45 118L44 115L44 114L46 112L47 112L48 107L48 105L49 103L49 100L53 102L55 104L56 106L58 109L58 112L58 113L57 119L57 120L61 119L63 120L65 121L69 124L69 125L74 129L75 132L77 134L78 136L79 137L81 140L80 142L81 143L80 147L81 150L83 152L85 155L82 155L77 155L77 155L77 162L77 163L76 162L75 161L72 161L69 158L66 159L63 158L63 160L60 159L58 158L57 158L55 157L51 158L50 159L49 161L45 162L42 162Z" data-n="San Juan" data-i=""/><path class="pv " d="M165 177L165 178L163 180L162 183L161 183L160 182L158 181L157 183L147 194L133 194L140 183L144 175L146 173L147 170L146 168L145 165L143 163L142 161L141 159L141 156L140 153L142 151L145 137L143 136L141 134L142 133L142 128L145 110L147 94L163 94L173 94L182 94L182 96L180 97L180 101L180 104L178 110L176 113L175 114L174 116L173 120L172 123L174 126L172 130L173 131L173 132L173 136L171 139L168 144L167 146L166 148L163 152L160 153L159 159L160 162L159 165L159 167L160 170L162 174L164 176L165 177Z" data-n="Santa Fe" data-i=""/><path class="pv v48" d="M104 93L106 92L106 91L106 89L106 86L107 84L108 84L109 81L111 75L112 73L113 73L112 70L113 66L113 63L116 56L120 57L126 57L134 58L147 57L147 76L147 94L145 110L142 128L140 122L129 122L126 122L125 121L124 120L121 120L119 119L118 117L115 117L108 119L106 114L106 111L105 106L104 104L105 102L105 98L104 93Z" data-n="Santiago del Estero" data-i="v48"/><path class="pv " d="M24 377L74 377L74 380L75 383L77 387L80 389L84 392L85 393L88 393L93 394L94 394L97 396L97 398L97 401L95 405L97 407L94 408L94 410L93 410L91 412L88 414L86 415L84 417L81 418L79 421L77 422L74 425L74 427L72 429L73 430L73 432L72 438L69 441L65 442L64 442L59 444L56 448L55 451L55 453L55 455L55 458L57 464L56 464L58 466L61 471L64 475L65 476L59 475L57 474L54 473L51 473L45 471L21 471L20 469L19 467L16 466L15 463L16 462L17 459L15 457L17 455L17 453L16 451L16 450L14 449L13 450L10 449L7 452L5 451L5 449L4 445L3 443L1 442L2 440L1 439L2 436L1 433L0 432L2 429L6 429L5 427L8 424L10 423L13 420L12 416L13 415L16 414L16 409L14 408L13 407L14 404L16 402L16 399L18 399L20 397L21 396L21 395L20 393L21 390L22 389L24 388L24 385L23 384L23 379L24 377Z" data-n="Santa Cruz" data-i=""/><path class="pv " d="M126 57L120 57L116 56L113 63L113 66L109 66L107 67L103 65L103 64L101 65L98 64L97 68L92 66L91 66L90 69L89 69L87 67L86 64L84 61L84 58L85 58L87 58L88 57L88 55L87 51L72 52L63 50L65 49L62 44L64 39L65 39L66 38L77 32L79 27L81 29L83 32L86 34L88 34L88 33L89 28L89 26L89 24L89 22L92 22L94 24L94 27L94 29L95 31L95 31L97 32L97 34L99 38L103 39L105 39L107 41L108 41L109 39L111 41L112 39L114 38L115 38L117 35L117 34L117 24L114 24L113 25L112 24L110 23L109 24L108 23L107 21L106 19L106 16L106 16L104 16L103 15L102 8L103 5L104 1L107 2L111 3L112 4L112 6L113 8L113 10L115 13L115 10L116 8L117 6L119 0L133 0L134 2L137 6L139 7L139 19L139 33L139 38L136 44L126 57Z" data-n="Salta" data-i=""/><path class="pv " d="M23 314L22 312L21 309L22 307L21 304L22 302L22 298L26 299L29 300L30 299L32 297L31 295L32 293L35 292L36 292L38 290L40 291L42 290L44 288L45 285L45 283L46 281L52 278L54 276L58 274L59 272L61 270L62 269L66 266L66 258L66 244L70 245L72 246L73 247L72 249L71 250L71 252L73 253L74 254L75 255L80 255L80 257L82 258L84 259L87 260L87 262L89 263L91 263L94 263L98 264L99 263L102 264L104 264L109 264L113 265L116 265L119 267L120 268L125 272L126 272L126 278L126 293L127 294L130 294L132 296L134 299L129 301L121 301L119 299L110 296L109 294L107 294L105 296L104 298L104 300L106 305L106 306L106 308L106 310L106 313L106 314L105 314L23 314Z" data-n="Río Negro" data-i=""/><path class="pv " d="M39 222L40 223L40 225L41 226L42 228L45 231L45 232L47 233L47 236L49 238L51 238L54 238L56 239L57 241L58 242L60 241L63 243L66 244L66 258L66 266L62 269L61 270L59 272L58 274L54 276L52 278L46 281L45 283L45 285L44 288L42 290L40 291L38 290L36 292L35 292L32 293L31 295L32 297L30 299L29 300L26 299L22 298L22 297L20 294L22 293L23 289L24 288L22 286L22 284L24 283L24 282L23 278L23 277L26 276L27 271L27 266L28 265L31 263L33 263L34 262L34 260L33 258L32 255L32 252L30 246L31 245L31 243L30 240L31 237L30 233L32 227L33 227L36 226L36 224L37 222L39 222Z" data-n="Neuquén" data-i=""/><path class="pv v52" d="M218 84L220 85L221 85L223 84L223 80L225 78L227 77L229 75L231 75L231 74L232 73L234 70L235 66L234 62L235 62L235 57L236 56L237 57L239 56L240 56L241 55L244 57L245 60L245 62L247 66L247 67L246 69L246 74L246 77L245 81L242 82L241 83L239 85L236 86L234 87L232 87L231 90L230 92L228 92L226 93L225 96L222 96L221 95L220 93L220 91L219 88L218 86L218 84Z" data-n="Misiones" data-i="v52"/><path class="pv v59" d="M39 222L40 221L39 218L40 217L39 214L40 212L39 210L38 209L38 207L40 206L40 204L42 199L44 195L44 193L46 193L47 192L46 185L46 181L47 179L47 177L45 176L45 177L43 176L43 174L45 171L43 169L42 167L43 165L42 162L45 162L49 161L50 159L51 158L55 157L57 158L58 158L60 159L63 160L63 158L66 159L69 158L72 161L75 161L76 162L77 163L78 164L79 168L79 169L79 172L79 172L79 176L80 179L82 184L82 186L85 189L85 191L84 192L84 195L85 198L87 201L87 203L88 206L88 212L86 219L86 220L76 220L66 220L66 222L66 244L63 243L60 241L58 242L57 241L56 239L54 238L51 238L49 238L47 236L47 233L45 232L45 231L42 228L41 226L40 225L40 223L39 222Z" data-n="Mendoza" data-i="v59"/><path class="pv qh" d="M105 127L101 128L100 132L98 138L97 142L97 155L96 156L93 155L92 156L90 156L87 156L85 155L83 152L81 150L80 147L81 143L80 142L81 140L79 137L78 136L77 134L75 132L74 129L69 125L69 124L65 121L63 120L61 119L57 120L57 119L58 113L58 112L58 109L56 106L55 104L53 102L49 100L50 99L53 96L53 94L55 94L55 91L58 91L60 90L63 90L64 91L64 94L68 96L70 97L71 100L74 100L75 98L77 99L80 100L81 99L82 99L87 101L88 102L89 105L90 108L93 109L96 113L97 116L98 118L105 127Z" data-n="La Rioja" data-i="qh"/><path class="pv " d="M126 272L125 272L120 268L119 267L116 265L113 265L109 264L104 264L102 264L99 263L98 264L94 263L91 263L89 263L87 262L87 260L84 259L82 258L80 257L80 255L75 255L74 254L73 253L71 252L71 250L72 249L73 247L72 246L70 245L66 244L66 222L66 220L76 220L86 220L105 220L105 204L111 204L126 204L126 221L126 269L126 272Z" data-n="La Pampa" data-i=""/><path class="pv " d="M104 1L103 5L102 8L103 15L104 16L106 16L106 16L106 19L107 21L108 23L109 24L110 23L112 24L113 25L114 24L117 24L117 34L117 35L115 38L114 38L112 39L111 41L109 39L108 41L107 41L105 39L103 39L99 38L97 34L97 32L95 31L95 31L94 29L94 27L94 24L92 22L89 22L89 24L89 26L89 28L88 33L88 34L86 34L83 32L81 29L79 27L80 22L82 16L79 13L80 11L81 10L81 8L84 7L85 4L90 2L90 1L91 -3L93 -3L95 -1L97 2L104 1Z" data-n="Jujuy" data-i=""/><path class="pv " d="M139 33L139 19L139 7L140 8L142 12L143 14L144 16L147 18L147 19L149 20L150 22L152 23L155 25L156 28L161 30L161 31L165 32L168 32L175 37L176 39L181 42L183 44L187 45L189 47L191 47L194 48L196 50L198 53L198 54L198 56L196 59L194 62L195 63L191 66L191 67L190 69L190 71L191 73L189 77L189 77L187 76L185 73L182 71L181 69L178 68L176 68L175 65L172 65L172 63L170 60L166 58L165 55L163 53L162 50L158 48L155 45L153 42L150 41L148 39L147 38L146 37L139 33Z" data-n="Formosa" data-i=""/><path class="pv ql" d="M165 177L164 176L162 174L160 170L159 167L159 165L160 162L159 159L160 153L163 152L166 148L167 146L168 144L171 139L173 136L173 132L173 131L176 130L178 131L180 129L182 129L185 128L186 128L190 130L192 132L193 135L195 137L196 139L194 146L193 148L192 149L193 150L193 151L193 154L191 155L191 157L191 159L192 161L192 162L190 165L190 166L191 172L191 173L190 174L188 174L188 177L187 179L186 183L186 185L187 186L187 189L186 189L180 186L178 185L175 184L174 183L173 183L171 182L170 181L167 179L165 177Z" data-n="Entre Ríos" data-i="ql"/><path class="pv " d="M173 131L172 130L174 126L172 123L173 120L174 116L175 114L176 113L178 110L180 104L180 101L180 97L182 96L182 94L183 90L182 86L184 84L186 83L187 83L193 83L196 83L198 84L202 85L204 86L207 85L209 86L211 86L213 88L214 86L214 85L216 83L218 84L218 86L219 88L220 91L220 93L221 95L222 96L221 98L221 100L219 100L218 103L216 106L214 106L212 111L210 113L209 115L204 122L202 123L201 125L199 128L198 129L197 131L195 133L194 135L195 137L193 135L192 132L190 130L186 128L185 128L182 129L180 129L178 131L176 130L173 131Z" data-n="Corrientes" data-i=""/><path class="pv " d="M105 204L105 190L105 176L106 173L108 166L107 162L104 162L103 159L103 158L99 155L97 155L97 142L98 138L100 132L101 128L105 127L107 123L107 119L108 119L115 117L118 117L119 119L121 120L124 120L125 121L126 122L129 122L140 122L142 128L142 133L141 134L143 136L145 137L142 151L140 153L141 156L141 159L142 161L143 163L145 165L146 168L147 170L146 173L144 175L140 183L133 194L126 194L126 204L111 204L105 204Z" data-n="Córdoba" data-i=""/><path class="pv " d="M24 377L24 375L23 374L22 373L23 370L26 369L28 366L28 365L25 361L23 360L19 360L19 357L22 358L24 358L26 357L28 358L29 357L29 356L31 354L30 352L27 352L23 352L23 347L24 344L22 342L23 341L23 339L21 337L21 335L23 334L23 332L22 332L20 332L18 330L19 327L18 323L19 320L18 318L19 316L21 317L23 315L23 314L105 314L106 314L106 315L108 317L111 318L113 318L111 320L113 321L117 321L118 320L118 318L115 318L120 316L122 316L124 319L124 324L123 326L123 327L118 328L116 326L116 324L115 323L113 322L111 322L108 324L107 324L107 326L109 327L111 329L115 330L111 332L109 332L106 335L105 337L102 340L102 343L104 347L103 349L103 350L102 354L99 355L98 357L98 358L100 359L99 361L98 362L96 361L92 361L88 362L87 364L83 364L82 366L79 369L78 370L77 374L74 377L24 377Z" data-n="Chubut" data-i=""/><path class="pv " d="M182 94L173 94L163 94L147 94L147 76L147 57L134 58L126 57L136 44L139 38L139 33L146 37L147 38L148 39L150 41L153 42L155 45L158 48L162 50L163 53L165 55L166 58L170 60L172 63L172 65L175 65L176 68L178 68L181 69L182 71L185 73L187 76L189 77L187 78L185 82L186 83L184 84L182 86L183 90L182 94Z" data-n="Chaco" data-i=""/><path class="pv " d="M104 93L105 98L105 102L104 104L105 106L106 111L106 114L108 119L107 119L107 123L105 127L98 118L97 116L96 113L93 109L90 108L89 105L88 102L87 101L82 99L81 99L80 100L77 99L75 98L74 100L71 100L70 97L68 96L64 94L64 91L63 90L60 90L58 91L55 91L56 88L58 84L58 82L59 80L61 81L65 79L66 77L62 71L63 67L64 65L63 58L62 55L62 53L63 50L72 52L87 51L88 55L88 57L87 58L85 58L84 58L84 61L86 64L87 67L89 69L90 69L91 66L92 66L91 69L91 71L94 72L96 74L96 77L92 82L92 84L93 84L94 85L95 89L96 91L98 91L98 94L99 95L100 94L102 92L103 93L104 93Z" data-n="Catamarca" data-i=""/><path class="pv qh" d="M145 271L143 270L143 268L145 269L145 271ZM187 197L186 198L187 199L189 198L191 200L196 202L199 205L201 207L203 209L204 211L201 216L201 219L202 221L204 224L206 226L208 225L209 226L209 229L210 234L204 243L199 249L198 253L195 256L189 259L184 261L180 262L177 263L169 264L158 266L154 267L151 267L149 267L146 267L143 266L141 264L139 264L139 265L140 266L139 268L139 271L140 272L143 275L142 280L140 280L140 281L139 286L137 287L138 290L140 292L141 293L140 296L135 299L134 299L132 296L130 294L127 294L126 293L126 278L126 272L126 269L126 221L126 204L126 194L133 194L147 194L157 183L158 181L160 182L161 183L162 183L163 180L165 178L165 177L167 179L170 181L171 182L173 183L174 183L175 184L178 185L180 186L186 189L187 189L188 189L188 191L187 194L187 197Z" data-n="Buenos Aires" data-i="qh"/><path d="M191 198L209 198" stroke="#8c98a8" stroke-width="1.2" fill="none"/><circle class="pv v80" cx="187" cy="198" r="4" data-n="CABA" data-i="v80"/><text class="ml" x="213" y="202" style="paint-order:normal;stroke:none;fill:var(--hi)">CABA ~80</text><text class="ml" x="127" y="93" text-anchor="middle">48,5</text><text class="ml" x="234" y="79" text-anchor="middle">52,3</text><text class="ml" x="61" y="201" text-anchor="middle">59,3</text></svg>
+<div><ul class="lg">
+<li><i class="v80"></i>CABA<b>~80%</b></li>
+<li><i class="v59"></i>Mendoza<b>59,3%</b></li>
+<li><i class="v52"></i>Misiones<b>52,3%</b></li>
+<li><i class="v48"></i>Santiago del Estero<b>48,5%</b></li>
+<li><i class="qh"></i>Entre las más altas<b>Buenos Aires, Tierra del Fuego, La Rioja</b></li>
+<li><i class="ql"></i>Entre las más bajas<b>Entre Ríos</b></li></ul>
+<p class="mi" id="mi">Tocá o pasá el cursor por las provincias coloreadas.</p></div></div>
+<p class="note">En CABA, ocho de cada diez alumnos egresan en tiempo y forma.</p></div>
+<p>Los datos indican que el problema no depende únicamente de la voluntad individual, sino también de la situación económica y del lugar de residencia. Las mujeres muestran mejor desempeño que los varones, y los estudiantes de menos recursos son quienes más dificultades enfrentan para finalizar.</p>
+<p>Hay, no obstante, una mejora: el abandono acumulado a los 17 años descendió 9,3 puntos porcentuales entre 2018 y 2022, en todas las provincias. La autora del <a href="https://www.todojujuy.com/pais/secundaria-el-abandono-escolar-cayo-mas-un-9-argentina-n239274" target="_blank" rel="noopener">informe</a>, Paz Míguez, advierte que la información educativa del país está fragmentada y que su confiabilidad para medir el abandono es limitada.</p>
+</section>
+
+<section data-t="Consecuencias">
+<h2>Cuando se apaga del todo</h2>
+<svg class="ill b" width="100%" viewBox="0 0 680 240" role="img"><title>Aula vacía con una mochila en una silla</title><desc>Ilustración plana de un aula sin estudiantes, con una ventana que deja entrar luz tenue, un pizarrón, tres pupitres y una mochila colgada del respaldo de una silla.</desc>
+<rect width="680" height="240" rx="8" fill="#2b3037"/>
+<path d="M0 176H680V232Q680 240 672 240H8Q0 240 0 232Z" fill="#252a30"/>
+<rect x="70" y="32" width="130" height="104" fill="#22262c" stroke="#7c828c" stroke-width="4"/><path d="M135 32V136M70 84H200" stroke="#7c828c" stroke-width="3"/><circle cx="170" cy="56" r="12" fill="#d3d5d9" opacity=".3"/>
+<polygon points="70,136 200,136 380,210 120,210" fill="#a98a58" opacity=".1"/>
+<rect x="370" y="30" width="250" height="78" rx="3" fill="#2f353d" stroke="#3a404a" stroke-width="3"/><path d="M390 50H500M390 66H460M390 82H520" stroke="#3a404a" stroke-width="3" stroke-linecap="round"/><rect x="370" y="108" width="250" height="6" fill="#5d6673"/><rect x="560" y="102" width="18" height="6" rx="2" fill="#94595a" opacity=".7"/>
+<g fill="#7c828c"><rect x="240" y="146" width="90" height="8" rx="3"/><rect x="368" y="146" width="90" height="8" rx="3"/><rect x="496" y="146" width="90" height="8" rx="3"/></g>
+<g fill="#5d6673"><rect x="250" y="154" width="5" height="44"/><rect x="314" y="154" width="5" height="44"/><rect x="378" y="154" width="5" height="44"/><rect x="442" y="154" width="5" height="44"/><rect x="506" y="154" width="5" height="44"/><rect x="570" y="154" width="5" height="44"/></g>
+<g fill="#5d6673"><rect x="214" y="122" width="8" height="56" rx="3"/><rect x="204" y="176" width="36" height="7" rx="3"/><rect x="218" y="183" width="4" height="16"/><rect x="338" y="122" width="8" height="56" rx="3"/><rect x="328" y="176" width="36" height="7" rx="3"/><rect x="342" y="183" width="4" height="16"/><rect x="474" y="122" width="8" height="56" rx="3"/><rect x="464" y="176" width="36" height="7" rx="3"/><rect x="478" y="183" width="4" height="16"/></g>
+<rect x="322" y="132" width="30" height="40" rx="9" fill="#94595a"/><rect x="328" y="148" width="18" height="12" rx="3" fill="#7a4748"/><path d="M328 134a9 8 0 0 1 18 0" stroke="#7a4748" stroke-width="3" fill="none"/>
+<rect x="276" y="136" width="30" height="10" fill="#d3d5d9" opacity=".6"/><rect x="520" y="138" width="22" height="8" fill="#a98a58" opacity=".7"/>
+<ellipse cx="380" cy="204" rx="190" ry="5" fill="#22262c" opacity=".5"/>
+</svg>
+<div class="cols">
+<div><h3>Para la persona</h3><p>Menores oportunidades laborales, empleos más precarios y salarios más bajos. En el caso de las adolescentes madres, UNICEF señala que el embarazo incide en una inserción laboral precaria.</p></div>
+<div><h3>Para el bienestar emocional</h3><p>La escuela es un espacio de amistad y pertenencia. Para muchas jóvenes es el único ámbito de socialización donde pueden seguir siendo adolescentes; abandonarla implica perderlo.</p></div>
+<div><h3>Para el país</h3><p>Se pierde capital humano, crece la desigualdad y la pobreza tiende a reproducirse de una generación a otra.</p></div>
+<div><h3>Una consecuencia paradójica</h3><p>Algunos docentes advierten que el abandono disminuyó a costa de reducir la exigencia. Bruno Videla, docente de una escuela pública porteña, sostiene que permanecer en el colegio no siempre equivale a aprender.</p></div>
+</div>
+</section>
+
+<section data-t="Conclusión">
+<h2>Recargar el sentido</h2>
+<svg class="ill b" width="100%" viewBox="0 0 680 240" role="img"><title>Batería conectada a un tomacorriente</title><desc>Ilustración plana de una batería grande, cargada a la mitad, conectada con un cable a un tomacorriente de pared, con un rayo y pequeñas chispas encima.</desc>
+<rect width="680" height="240" rx="8" fill="#2b3037"/>
+<ellipse cx="400" cy="120" rx="270" ry="96" fill="#343a43"/>
+<path d="M0 196H680V232Q680 240 672 240H8Q0 240 0 232Z" fill="#252a30"/>
+<rect x="40" y="76" width="56" height="80" rx="9" fill="#3a404a" stroke="#5d6673" stroke-width="3"/><rect x="64" y="96" width="5" height="14" rx="2" fill="#22262c"/><rect x="64" y="122" width="5" height="14" rx="2" fill="#22262c"/><circle cx="82" cy="116" r="3" fill="#22262c"/>
+<rect x="104" y="98" width="48" height="36" rx="6" fill="#5d6673"/><rect x="96" y="106" width="10" height="5" fill="#7c828c"/><rect x="96" y="121" width="10" height="5" fill="#7c828c"/>
+<path d="M152 116C196 116 204 172 252 156S270 124 300 126" stroke="#5d6673" stroke-width="7" fill="none" stroke-linecap="round"/>
+<ellipse cx="240" cy="178" rx="60" ry="5" fill="#22262c" opacity=".5"/>
+<rect x="300" y="70" width="250" height="112" rx="22" fill="none" stroke="#7c828c" stroke-width="7"/><rect x="556" y="102" width="20" height="48" rx="7" fill="#7c828c"/>
+<rect x="318" y="88" width="52" height="76" rx="9" fill="#a98a58"/><rect x="378" y="88" width="52" height="76" rx="9" fill="#a98a58"/>
+<rect x="438" y="88" width="52" height="76" rx="9" fill="none" stroke="#5d6673" stroke-width="3" stroke-dasharray="6 5"/><rect x="498" y="88" width="34" height="76" rx="9" fill="none" stroke="#5d6673" stroke-width="3" stroke-dasharray="6 5"/>
+<path d="M432 22L414 52H430L420 76L446 44H430Z" fill="none" stroke="#a98a58" stroke-width="3" stroke-linejoin="round"/>
+<g fill="#a98a58"><circle cx="386" cy="36" r="3"/><circle cx="470" cy="30" r="3"/><circle cx="480" cy="56" r="2"/><circle cx="376" cy="58" r="2"/></g>
+</svg>
+<p class="lead">La desmotivación en la secundaria no admite una explicación única. Hay jóvenes que deben trabajar o cuidar a otros, y hay quienes simplemente no encuentran utilidad en lo que se les enseña.</p>
+<p>Los indicadores han mejorado levemente, pero siguen siendo bajos: en varias provincias menos de la mitad de los estudiantes finaliza en tiempo y forma. Resulta fundamental no culpabilizar a los adolescentes, sino repensar las formas de enseñar y acompañar con mayor atención a quienes están en riesgo de abandonar.</p>
+<p class="quote">Cuando la escuela encuentra su sentido para los jóvenes, los jóvenes permanecen en ella.</p>
+</section>
+
+<div class="pager"><button id="prev">← Anterior</button><button id="next">Siguiente →</button></div>
+<div class="foot">Sitio en versión <button class="vb" id="vm" aria-pressed="false">Móvil</button><button class="vb" id="vd" aria-pressed="true">Escritorio</button></div>
+</main>
+<script>
+(function(){
+var secs=[].slice.call(document.querySelectorAll("section")),nav=document.getElementById("nav"),
+pct=[100,80,62,45,30,16,1],cur=0,btns=[];
+function batt(p){var c=p<=20?"var(--red)":p<=50?"var(--amb)":"var(--bar)";return '<svg viewBox="0 0 46 22"><rect x="1" y="1" width="39" height="20" rx="4" fill="none" stroke="var(--mut)" stroke-width="2"/><rect x="41" y="7" width="4" height="8" rx="1.5" fill="var(--mut)"/><rect x="4" y="4" width="'+Math.max(2,33*p/100)+'" height="14" rx="2" fill="'+c+'"/></svg>'}
+document.getElementById("bs").innerHTML=[75,50,25,5].map(batt).join("");
+secs.forEach(function(s,i){var b=document.createElement("button");b.textContent=s.dataset.t;b.onclick=function(){show(i)};nav.appendChild(b);btns.push(b)});
+var d=document.getElementById("desks"),desk='<svg viewBox="0 0 40 44"><circle cx="20" cy="9" r="6" fill="COL"/><rect x="8" y="18" width="24" height="10" rx="3" fill="COL"/><rect x="6" y="30" width="28" height="4" rx="1" fill="var(--line)"/><rect x="10" y="34" width="3" height="8" fill="var(--line)"/><rect x="27" y="34" width="3" height="8" fill="var(--line)"/></svg>';
+for(var i=0;i<10;i++){var w=document.createElement("div");w.innerHTML=desk.replace(/COL/g,i==0?"var(--amb)":"var(--line)");d.appendChild(w)}
+function show(i){
+cur=Math.max(0,Math.min(secs.length-1,i));
+secs.forEach(function(s,k){s.classList.toggle("on",k==cur);btns[k].setAttribute("aria-current",k==cur)});
+var p=pct[cur],bf=document.getElementById("bf");
+bf.setAttribute("width",Math.max(1.5,24*p/100));
+bf.setAttribute("fill",p<=20?"var(--red)":"var(--amb)");
+document.getElementById("bp").textContent=p+"%";
+document.getElementById("prev").style.visibility=cur?"visible":"hidden";
+document.getElementById("next").style.visibility=cur<secs.length-1?"visible":"hidden";
+document.querySelector(".pager").style.display=cur?"flex":"none";
+btns[cur].scrollIntoView({block:"nearest",inline:"center"});
+window.scrollTo(0,0);
+var f=secs[cur].querySelectorAll(".fill");
+f.forEach(function(x){x.style.width="0"});
+requestAnimationFrame(function(){setTimeout(function(){f.forEach(function(x){x.style.width=x.dataset.w+"%"})},60)});
+}
+document.getElementById("prev").onclick=function(){show(cur-1)};
+document.getElementById("next").onclick=function(){show(cur+1)};
+document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){show(+b.dataset.go)}});
+show(0);
+})();
+</script>
+<script>
+(function(){var mi=document.getElementById("mi"),I={"v80": "Unos 8 de cada 10 alumnos egresan en tiempo y forma.", "v59": "El 59,3% egresa en tiempo y forma. Está en la media según el informe.", "v52": "El 52,3% egresa en tiempo y forma. Figura entre las provincias más desafiantes.", "v48": "El 48,5% egresa en tiempo y forma, la cifra más baja de las citadas. Figura entre las más desafiantes.", "qh": "Figura entre las provincias con porcentajes más elevados.", "ql": "Figura entre las provincias más desafiantes."},cur;
+function s(e){var t=e.target;if(!t.classList||!t.classList.contains("pv")||!t.getAttribute("data-i"))return;if(cur)cur.classList.remove("on");cur=t;t.classList.add("on");
+mi.innerHTML="<b style='color:var(--hi);font-weight:500'>"+t.getAttribute("data-n")+".</b> "+I[t.getAttribute("data-i")||""]}
+var m=document.querySelector(".map");m.addEventListener("mouseover",s);m.addEventListener("click",s);
+})();
+</script>
+<script>
+(function(){var b=document.body,m=document.getElementById("vm"),d=document.getElementById("vd");
+function set(x){b.classList.toggle("mv",x);m.setAttribute("aria-pressed",x);d.setAttribute("aria-pressed",!x)}
+m.onclick=function(){set(true)};d.onclick=function(){set(false)};
+var ph=window.innerWidth<=700;m.setAttribute("aria-pressed",ph);d.setAttribute("aria-pressed",!ph);
+})();
+</script>
+</body>
+</html>
